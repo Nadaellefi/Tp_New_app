@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Accueil{% endblock %}
+{% block content %}
+<h1 class="mb-3">Welcome to my first Azure PaaS application!</h1>
+
+<div class="card mb-4">
+  <div class="card-body">
+    <h5 class="card-title">Ajouter un étudiant</h5>
+    <form method="post" action="{{ url_for('add') }}" class="row g-2">
+      <div class="col-md-5">
+        <input type="text" name="name" class="form-control" placeholder="Nom" required>
+      </div>
+      <div class="col-md-5">
+        <input type="text" name="course" class="form-control" placeholder="Cours" required>
+      </div>
+      <div class="col-md-2 d-grid">
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<table class="table table-striped bg-white">
+  <thead>
+    <tr><th>#</th><th>Nom</th><th>Cours</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for s in students %}
+    <tr>
+      <td>{{ s.id }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ s.course }}</td>
+      <td class="text-end">
+        <form method="post" action="{{ url_for('delete', student_id=s.id) }}">
+          <button type="submit" class="btn btn-sm btn-danger">Supprimer</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="4" class="text-center">Aucun étudiant.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
